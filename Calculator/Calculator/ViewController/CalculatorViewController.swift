@@ -12,7 +12,11 @@ class CalculatorViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+}
 
-
+extension CalculatorViewController {
+    @IBAction func numberKeyButtonPressed(_ sender: UIButton) {
+        
+    }
 }
 
