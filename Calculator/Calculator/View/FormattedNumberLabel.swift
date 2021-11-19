@@ -8,9 +8,9 @@
 import UIKit
 
 class FormattedNumberLabel: UILabel {
-    var formattedNumberText: String? = "" {
+    private var unformattedNumberText: String? = "" {
         didSet {
-            self.text = formattedNumberText
+            self.text = unformattedNumberText
         }
     }
 }
