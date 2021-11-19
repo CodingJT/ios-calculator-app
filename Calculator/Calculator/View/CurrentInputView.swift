@@ -7,6 +7,7 @@
 
 import UIKit
 
+@IBDesignable
 class CurrentInputView: UIView {
     
     private let operatorTextLabel: UILabel = UILabel()
@@ -20,6 +21,12 @@ class CurrentInputView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureView()
+    }
+    
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        configureView()
+        self.translatesAutoresizingMaskIntoConstraints = true
     }
     
     private func configureView() {
