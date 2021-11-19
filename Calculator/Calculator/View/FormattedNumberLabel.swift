@@ -22,4 +22,8 @@ class FormattedNumberLabel: UILabel {
         numberText.append(value)
         self.unformattedNumberText = numberText
     }
+    
+    func setNumberTextToZero() {
+        unformattedNumberText = "0"
+    }
 }
