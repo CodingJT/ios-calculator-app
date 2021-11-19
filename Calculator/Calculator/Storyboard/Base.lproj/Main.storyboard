@@ -309,12 +309,6 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="Fzs-eQ-r8P" firstAttribute="leading" secondItem="DC3-Ia-6L7" secondAttribute="leading" id="S1v-5R-Mly"/>
-                                    <constraint firstAttribute="bottom" secondItem="Fzs-eQ-r8P" secondAttribute="bottom" id="kSU-J2-7Tc"/>
-                                    <constraint firstAttribute="trailing" secondItem="Fzs-eQ-r8P" secondAttribute="trailing" id="vYu-Ak-J6R"/>
-                                    <constraint firstItem="Fzs-eQ-r8P" firstAttribute="top" secondItem="DC3-Ia-6L7" secondAttribute="top" id="zBM-gQ-Iq1"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
