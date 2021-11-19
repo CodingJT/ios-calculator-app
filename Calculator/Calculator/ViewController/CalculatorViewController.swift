@@ -21,5 +21,9 @@ extension CalculatorViewController {
         guard let pressedButtonText = sender.titleLabel?.text else { return }
         currentInputView.appendOperandCharacter(pressedButtonText)
     }
+    
+    @IBAction func acButtonPressed(_ sender: UIButton) {
+        currentInputView.clearCurrentInput()
+    }
 }
 
