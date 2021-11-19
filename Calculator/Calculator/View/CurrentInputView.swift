@@ -11,7 +11,7 @@ import UIKit
 class CurrentInputView: UIView {
     
     private let operatorTextLabel: UILabel = UILabel()
-    private let operandTextLabel: UILabel = UILabel()
+    private let operandTextLabel: FormattedNumberLabel = FormattedNumberLabel()
     
     var `operator`: Operator? {
         get {
@@ -31,7 +31,7 @@ class CurrentInputView: UIView {
     
     var operand: Double? {
         get {
-            guard let operandText = operandTextLabel.text else { return nil }
+            guard let operandText = operandTextLabel.unformattedNumberText else { return nil }
             return Double(operandText)
         }
     }
@@ -50,7 +50,7 @@ class CurrentInputView: UIView {
         super.prepareForInterfaceBuilder()
         configureView()
         self.operator = .add
-        operandTextLabel.text = "1234567890"
+        operandTextLabel.appendNumberText("123456789")
     }
     
     func commonInit() {
@@ -70,7 +70,7 @@ class CurrentInputView: UIView {
         operatorTextLabel.setContentHuggingPriority(.required, for: .horizontal)
         operatorTextLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         setStyle(for: operatorTextLabel, textAlignment: .left)
-        setStyle(for: operandTextLabel, withText: "0" , textAlignment: .right)
+        setStyle(for: operandTextLabel, textAlignment: .right)
     }
     
     private func configureStackView() {
@@ -92,38 +92,22 @@ class CurrentInputView: UIView {
         stackView.addArrangedSubview(operandTextLabel)
     }
     
-    private func setStyle(for label: UILabel, withText text: String = "", textAlignment: NSTextAlignment) {
+    private func setStyle(for label: UILabel, textAlignment: NSTextAlignment) {
         label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         label.textColor = .white
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         
-        label.text = text
         label.textAlignment = textAlignment
     }
     
     func clearCurrentInput() {
         self.operator = nil
-        operandTextLabel.text = "0"
+        operandTextLabel.setNumberTextToZero()
     }
     
     func appendOperandCharacter(_ value: String) {
-        // 0일 때 00 입력 무시
-        // 0일 때 0 입력 무시
-        // 0일 때 1~9 숫자 입력 시 숫자 0에서 해당 숫자로 변경
-        var operandText = operandTextLabel.text ?? "0"
-        
-        // 해당 코드는 임시. 리팩토링 필요
-        if operandText == "0" {
-            
-        } else if operandText == "00" {
-            
-        } else if value.count == 1 && "0123456789.".contains(value) {
-            
-        }
-        
-        operandText.append(value)
-        operandTextLabel.text = operandText
+        operandTextLabel.appendNumberText(value)
     }
 }
