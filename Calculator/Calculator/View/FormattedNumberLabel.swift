@@ -8,7 +8,7 @@
 import UIKit
 
 class FormattedNumberLabel: UILabel {
-    private var unformattedNumberText: String? = "" {
+    private(set) var unformattedNumberText: String? = "" {
         didSet {
             self.text = unformattedNumberText
         }
