@@ -7,8 +7,9 @@
 
 import UIKit
 
+@IBDesignable
 class FormattedNumberLabel: UILabel {
-    private(set) var unformattedNumberText: String? = "" {
+    @IBInspectable private(set) var unformattedNumberText: String? = "" {
         didSet {
             self.text = unformattedNumberText
         }
@@ -27,7 +28,10 @@ class FormattedNumberLabel: UILabel {
     func appendNumberText(_ value: String) {
         var numberText = self.unformattedNumberText ?? "0"
         
-        guard numberText.rangeOfCharacter(from: .decimalDigits.inverted) == nil else { return }
+        let signsString = "\(Operator.add.rawValue)\(Operator.subtract.rawValue)."
+        let decimalDigitsAndSignsSet = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: signsString))
+        
+        guard value.rangeOfCharacter(from: decimalDigitsAndSignsSet.inverted) == nil else { return }
         
         numberText.append(value)
         self.unformattedNumberText = numberText
