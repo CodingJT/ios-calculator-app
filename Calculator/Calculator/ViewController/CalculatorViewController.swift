@@ -16,7 +16,7 @@ class CalculatorViewController: UIViewController {
 
 extension CalculatorViewController {
     @IBAction func numberKeyButtonPressed(_ sender: UIButton) {
-        
+        print(sender.titleLabel?.text)
     }
 }
 
