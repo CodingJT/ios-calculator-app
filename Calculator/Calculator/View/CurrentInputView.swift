@@ -31,6 +31,8 @@ class CurrentInputView: UIView {
     
     private func configureLabels() {
         let additionSymbol = String(Operator.add.rawValue)
+        operatorTextLabel.setContentHuggingPriority(.required, for: .horizontal)
+        operatorTextLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         setStyle(for: operatorTextLabel, withText: additionSymbol, textAlignment: .left)
         setStyle(for: operandTextLabel, withText: "1234567890", textAlignment: .right)
     }
