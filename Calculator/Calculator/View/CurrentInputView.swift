@@ -13,6 +13,36 @@ class CurrentInputView: UIView {
     private let operatorTextLabel: UILabel = UILabel()
     private let operandTextLabel: UILabel = UILabel()
     
+    var `operator`: Operator? {
+        get {
+            guard let operatorText = operatorTextLabel.text, operatorText.count == 1 else { return nil }
+            let operatorCharacter = Character(operatorText)
+            return Operator(rawValue: operatorCharacter)
+        }
+        set {
+            guard let operatorCharacter = newValue?.rawValue else {
+                operatorTextLabel.text = nil
+                return
+            }
+            let operatorText = String(operatorCharacter)
+            operatorTextLabel.text = operatorText
+        }
+    }
+    
+    var operand: Double? {
+        get {
+            guard let operandText = operandTextLabel.text else { return nil }
+            return Double(operandText)
+        }
+        set {
+            guard let operandValue = newValue else {
+                operandTextLabel.text = nil
+                return
+            }
+            operandTextLabel.text = String(operandValue)
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -26,6 +56,8 @@ class CurrentInputView: UIView {
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         configureView()
+        self.operator = .add
+        self.operand = 1234567890
     }
     
     private func configureView() {
@@ -38,11 +70,10 @@ class CurrentInputView: UIView {
     }
     
     private func configureLabels() {
-        let additionSymbol = String(Operator.add.rawValue)
         operatorTextLabel.setContentHuggingPriority(.required, for: .horizontal)
         operatorTextLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        setStyle(for: operatorTextLabel, withText: additionSymbol, textAlignment: .left)
-        setStyle(for: operandTextLabel, withText: "1234567890", textAlignment: .right)
+        setStyle(for: operatorTextLabel, textAlignment: .left)
+        setStyle(for: operandTextLabel, textAlignment: .right)
     }
     
     private func configureStackView() {
