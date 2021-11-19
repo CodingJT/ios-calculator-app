@@ -34,13 +34,6 @@ class CurrentInputView: UIView {
             guard let operandText = operandTextLabel.text else { return nil }
             return Double(operandText)
         }
-        set {
-            guard let operandValue = newValue else {
-                operandTextLabel.text = nil
-                return
-            }
-            operandTextLabel.text = String(operandValue)
-        }
     }
     
     override init(frame: CGRect) {
@@ -57,13 +50,11 @@ class CurrentInputView: UIView {
         super.prepareForInterfaceBuilder()
         configureView()
         self.operator = .add
-        setOperandValue(1234567890)
+        operandTextLabel.text = "1234567890"
     }
     
     func commonInit() {
         configureView()
-        self.operator = nil
-        setOperandValue(0)
     }
     
     private func configureView() {
@@ -79,7 +70,7 @@ class CurrentInputView: UIView {
         operatorTextLabel.setContentHuggingPriority(.required, for: .horizontal)
         operatorTextLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         setStyle(for: operatorTextLabel, textAlignment: .left)
-        setStyle(for: operandTextLabel, textAlignment: .right)
+        setStyle(for: operandTextLabel, withText: "0" , textAlignment: .right)
     }
     
     private func configureStackView() {
@@ -112,7 +103,27 @@ class CurrentInputView: UIView {
         label.textAlignment = textAlignment
     }
     
-    func setOperandValue(_ value: Double) {
-        operandTextLabel.text = String(value)
+    func clearCurrentInput() {
+        self.operator = nil
+        operandTextLabel.text = "0"
+    }
+    
+    func appendOperandCharacter(_ value: String) {
+        // 0일 때 00 입력 무시
+        // 0일 때 0 입력 무시
+        // 0일 때 1~9 숫자 입력 시 숫자 0에서 해당 숫자로 변경
+        var operandText = operandTextLabel.text ?? "0"
+        
+        // 해당 코드는 임시. 리팩토링 필요
+        if operandText == "0" {
+            
+        } else if operandText == "00" {
+            
+        } else if value.count == 1 && "0123456789.".contains(value) {
+            
+        }
+        
+        operandText.append(value)
+        operandTextLabel.text = operandText
     }
 }
