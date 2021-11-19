@@ -24,7 +24,14 @@ class CurrentInputView: UIView {
     
     private func configureView() {
         self.translatesAutoresizingMaskIntoConstraints = false
+        configureLabels()
         configureStackView()
+    }
+    
+    private func configureLabels() {
+        let additionSymbol = String(Operator.add.rawValue)
+        setStyle(for: operatorTextLabel, withText: additionSymbol, textAlignment: .left)
+        setStyle(for: operandTextLabel, withText: "1234567890", textAlignment: .right)
     }
     
     private func configureStackView() {
@@ -44,5 +51,16 @@ class CurrentInputView: UIView {
         
         stackView.addArrangedSubview(operatorTextLabel)
         stackView.addArrangedSubview(operandTextLabel)
+    }
+    
+    private func setStyle(for label: UILabel, withText text: String = "", textAlignment: NSTextAlignment) {
+        label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        label.textColor = .white
+        label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        
+        label.text = text
+        label.textAlignment = textAlignment
     }
 }
