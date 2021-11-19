@@ -41,5 +41,8 @@ class CurrentInputView: UIView {
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
+        stackView.addArrangedSubview(operatorTextLabel)
+        stackView.addArrangedSubview(operandTextLabel)
     }
 }
