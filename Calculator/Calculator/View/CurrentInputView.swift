@@ -45,19 +45,25 @@ class CurrentInputView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureView()
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureView()
+        commonInit()
     }
     
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         configureView()
         self.operator = .add
-        self.operand = 1234567890
+        setOperandValue(1234567890)
+    }
+    
+    func commonInit() {
+        configureView()
+        self.operator = nil
+        setOperandValue(0)
     }
     
     private func configureView() {
@@ -104,5 +110,9 @@ class CurrentInputView: UIView {
         
         label.text = text
         label.textAlignment = textAlignment
+    }
+    
+    func setOperandValue(_ value: Double) {
+        operandTextLabel.text = String(value)
     }
 }
