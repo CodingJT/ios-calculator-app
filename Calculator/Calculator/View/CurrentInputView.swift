@@ -31,7 +31,7 @@ class CurrentInputView: UIView {
     
     var operand: Double? {
         get {
-            guard let operandText = operandTextLabel.unformattedNumberText else { return nil }
+            let operandText = operandTextLabel.unformattedNumberText
             return Double(operandText)
         }
     }
