@@ -24,6 +24,7 @@ class CurrentInputView: UIView {
     
     private func configureView() {
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .clear
         configureLabels()
         configureStackView()
     }
