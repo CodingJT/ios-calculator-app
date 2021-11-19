@@ -8,6 +8,8 @@ import UIKit
 
 class CalculatorViewController: UIViewController {
 
+    @IBOutlet weak var currentInputView: CurrentInputView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -16,7 +18,8 @@ class CalculatorViewController: UIViewController {
 
 extension CalculatorViewController {
     @IBAction func numberKeyButtonPressed(_ sender: UIButton) {
-        print(sender.titleLabel?.text)
+        guard let pressedButtonText = sender.titleLabel?.text else { return }
+        currentInputView.appendOperandCharacter(pressedButtonText)
     }
 }
 
