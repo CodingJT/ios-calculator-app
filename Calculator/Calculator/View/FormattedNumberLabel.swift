@@ -38,6 +38,14 @@ class FormattedNumberLabel: UILabel {
         
         guard value.rangeOfCharacter(from: decimalDigitsAndSignsWithDecimalPointSet.inverted) == nil else { return }
         
+        if numberText == zeroString {
+            guard let firstValueCharacter = value.first else { return }
+            guard firstValueCharacter != Character(zeroString) else { return }
+            if firstValueCharacter != decimalPointCharacter {
+                numberText = ""
+            }
+        }
+        
         if value.contains(decimalPointCharacter) {
             guard isDecimalPointIncluded == false else { return }
             isDecimalPointIncluded = true
