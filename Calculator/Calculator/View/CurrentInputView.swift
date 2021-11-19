@@ -26,11 +26,12 @@ class CurrentInputView: UIView {
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         configureView()
-        self.translatesAutoresizingMaskIntoConstraints = true
     }
     
     private func configureView() {
-        self.translatesAutoresizingMaskIntoConstraints = false
+        #if !TARGET_INTERFACE_BUILDER
+            self.translatesAutoresizingMaskIntoConstraints = false
+        #endif
         self.backgroundColor = .clear
         configureLabels()
         configureStackView()
