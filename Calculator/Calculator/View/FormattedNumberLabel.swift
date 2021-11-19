@@ -13,4 +13,13 @@ class FormattedNumberLabel: UILabel {
             self.text = unformattedNumberText
         }
     }
+    
+    func appendNumberText(_ value: String) {
+        var numberText = self.unformattedNumberText ?? "0"
+        
+        guard numberText.rangeOfCharacter(from: .decimalDigits.inverted) == nil else { return }
+        
+        numberText.append(value)
+        self.unformattedNumberText = numberText
+    }
 }
