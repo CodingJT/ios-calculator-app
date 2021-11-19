@@ -14,6 +14,16 @@ class FormattedNumberLabel: UILabel {
         }
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setNumberTextToZero()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setNumberTextToZero()
+    }
+    
     func appendNumberText(_ value: String) {
         var numberText = self.unformattedNumberText ?? "0"
         
