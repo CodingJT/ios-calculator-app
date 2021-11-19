@@ -9,7 +9,9 @@ import UIKit
 
 @IBDesignable
 class FormattedNumberLabel: UILabel {
-    @IBInspectable private(set) var unformattedNumberText: String = "0" {
+    private let zeroString = String(Int.zero)
+    
+    @IBInspectable private(set) var unformattedNumberText: String = "" {
         didSet {
             self.text = unformattedNumberText
         }
@@ -38,6 +40,6 @@ class FormattedNumberLabel: UILabel {
     }
     
     func setNumberTextToZero() {
-        unformattedNumberText = "0"
+        unformattedNumberText = zeroString
     }
 }
