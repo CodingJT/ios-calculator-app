@@ -29,11 +29,21 @@ class FormulaTextView: UIView {
         }
     }
     
-    var operand: Double? {
+    var operandText: String? {
         get {
-            let operandText = operandTextLabel.unformattedNumberText
-            return Double(operandText)
+            return operandTextLabel.unformattedNumberText
         }
+        set {
+            operandTextLabel.setNumberTextToZero()
+            guard let numberText = newValue else { return }
+            operandTextLabel.appendNumberText(numberText)
+        }
+    }
+    
+    var formulaText: String? {
+        guard let operatorText = operatorTextLabel.text, operatorText.count == 1 else { return nil }
+        let operandText = operandTextLabel.unformattedNumberText
+        return operatorText + operandText
     }
     
     override init(frame: CGRect) {
