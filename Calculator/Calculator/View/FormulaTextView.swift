@@ -8,7 +8,7 @@
 import UIKit
 
 @IBDesignable
-class CurrentInputView: UIView {
+class FormulaTextView: UIView {
     
     private let operatorTextLabel: UILabel = UILabel()
     private let operandTextLabel: FormattedNumberLabel = FormattedNumberLabel()

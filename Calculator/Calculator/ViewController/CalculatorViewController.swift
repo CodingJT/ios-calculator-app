@@ -8,7 +8,7 @@ import UIKit
 
 class CalculatorViewController: UIViewController {
 
-    @IBOutlet weak var currentInputView: CurrentInputView!
+    @IBOutlet weak var currentInputView: FormulaTextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
