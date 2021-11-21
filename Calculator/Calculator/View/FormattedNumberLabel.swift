@@ -10,11 +10,52 @@ import UIKit
 @IBDesignable
 class FormattedNumberLabel: UILabel {
     private let zeroString = String(Int.zero)
-    private var isDecimalPointIncluded = false
+    private let decimalPointCharacter = Character(".")
     
-    @IBInspectable private(set) var unformattedNumberText: String = "" {
+    private var isDecimalPointIncluded = false {
         didSet {
-            self.text = unformattedNumberText
+            guard isDecimalPointIncluded && isDecimalPointIncluded != oldValue else { return }
+            var newText = positiveFormattedNumberText
+            newText.append(decimalPointCharacter)
+            self.text = newText
+        }
+    }
+    
+    var unformattedNumberText: String {
+        var numberText = positiveUnformattedNumberText
+        if negativeUnformattedNumberText.isEmpty == false {
+            numberText.append(decimalPointCharacter)
+            numberText.append(negativeUnformattedNumberText)
+        }
+        return numberText
+    }
+    
+    private var positiveUnformattedNumberText: String = "" {
+        didSet {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            guard let positiveNumber = Double(positiveUnformattedNumberText) else { return }
+            guard let formattedPositiveNumberText = formatter.string(from: NSNumber(value: positiveNumber)) else { return }
+            positiveFormattedNumberText = formattedPositiveNumberText
+        }
+    }
+    private var negativeUnformattedNumberText: String = "" {
+        didSet {
+            guard isDecimalPointIncluded else { return }
+            var numberText = positiveFormattedNumberText
+            numberText.append(decimalPointCharacter)
+            numberText.append(negativeUnformattedNumberText)
+            self.text = numberText
+        }
+    }
+    private var positiveFormattedNumberText: String = "" {
+        didSet {
+            var newText = positiveFormattedNumberText
+            if isDecimalPointIncluded {
+                newText.append(decimalPointCharacter)
+                newText.append(negativeUnformattedNumberText)
+            }
+            self.text = newText
         }
     }
     
@@ -29,8 +70,9 @@ class FormattedNumberLabel: UILabel {
     }
     
     func appendNumberText(_ value: String) {
-        var numberText = self.unformattedNumberText
-        let decimalPointCharacter = Character(".")
+        if isDecimalPointIncluded == false, value.contains(decimalPointCharacter) {
+            isDecimalPointIncluded = true
+        }
         
         let signsString = "\(Operator.add.rawValue)\(Operator.subtract.rawValue)"
         let signsAndDecimalPointSet = CharacterSet(charactersIn: "\(signsString)\(decimalPointCharacter)")
@@ -38,25 +80,33 @@ class FormattedNumberLabel: UILabel {
         
         guard value.rangeOfCharacter(from: decimalDigitsAndSignsWithDecimalPointSet.inverted) == nil else { return }
         
-        if numberText == zeroString {
+        var newPositiveNumberText = positiveUnformattedNumberText
+        var newNegativeNumberText = negativeUnformattedNumberText
+        
+        if newPositiveNumberText == zeroString && isDecimalPointIncluded == false {
             guard let firstValueCharacter = value.first else { return }
             guard firstValueCharacter != Character(zeroString) else { return }
-            if firstValueCharacter != decimalPointCharacter {
-                numberText = ""
-            }
+            guard firstValueCharacter != decimalPointCharacter else { return }
+            newPositiveNumberText = ""
         }
         
-        if value.contains(decimalPointCharacter) {
-            guard isDecimalPointIncluded == false else { return }
-            isDecimalPointIncluded = true
+        if value.last == decimalPointCharacter {
+            var newValue = value
+            newValue.removeLast()
+            newPositiveNumberText.append(newValue)
+        } else if isDecimalPointIncluded {
+            newNegativeNumberText.append(value)
+        } else {
+            newPositiveNumberText.append(value)
         }
         
-        numberText.append(value)
-        self.unformattedNumberText = numberText
+        self.positiveUnformattedNumberText = newPositiveNumberText
+        self.negativeUnformattedNumberText = newNegativeNumberText
     }
     
     func setNumberTextToZero() {
-        unformattedNumberText = zeroString
         isDecimalPointIncluded = false
+        positiveUnformattedNumberText = zeroString
+        negativeUnformattedNumberText = ""
     }
 }
