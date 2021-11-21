@@ -14,7 +14,11 @@ class FormattedNumberLabel: UILabel {
     
     private var isDecimalPointIncluded = false {
         didSet {
-            guard isDecimalPointIncluded && isDecimalPointIncluded != oldValue else { return }
+            guard isDecimalPointIncluded != oldValue else { return }
+            guard isDecimalPointIncluded else {
+                self.text = positiveFormattedNumberText
+                return
+            }
             var newText = positiveFormattedNumberText
             newText.append(decimalPointCharacter)
             self.text = newText
@@ -105,8 +109,8 @@ class FormattedNumberLabel: UILabel {
     }
     
     func setNumberTextToZero() {
-        isDecimalPointIncluded = false
         positiveUnformattedNumberText = zeroString
         negativeUnformattedNumberText = ""
+        isDecimalPointIncluded = false
     }
 }

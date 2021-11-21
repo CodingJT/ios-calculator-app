@@ -50,7 +50,7 @@ class CurrentInputView: UIView {
         super.prepareForInterfaceBuilder()
         configureView()
         self.operator = .add
-        operandTextLabel.appendNumberText("123456789")
+        operandTextLabel.appendNumberText("1234567890")
     }
     
     func commonInit() {
