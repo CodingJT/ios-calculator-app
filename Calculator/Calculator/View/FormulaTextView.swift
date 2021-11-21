@@ -13,6 +13,8 @@ class FormulaTextView: UIView {
     private let operatorTextLabel: UILabel = UILabel()
     private let operandTextLabel: FormattedNumberLabel = FormattedNumberLabel()
     
+    private let defaultFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+    
     var `operator`: Operator? {
         get {
             guard let operatorText = operatorTextLabel.text, operatorText.count == 1 else { return nil }
@@ -35,7 +37,7 @@ class FormulaTextView: UIView {
         }
         set {
             operandTextLabel.setNumberTextToZero()
-            guard let numberText = newValue else { return }
+            guard let numberText = newValue, numberText.isEmpty == false else { return }
             operandTextLabel.appendNumberText(numberText)
         }
     }
@@ -44,6 +46,23 @@ class FormulaTextView: UIView {
         guard let operatorText = operatorTextLabel.text, operatorText.count == 1 else { return nil }
         let operandText = operandTextLabel.unformattedNumberText
         return operatorText + operandText
+    }
+    
+    var operandFont: UIFont {
+        get {
+            return operatorTextLabel.font
+        }
+        set {
+            operandTextLabel.font = newValue
+        }
+    }
+    var operatorFont: UIFont {
+        get {
+            return operatorTextLabel.font
+        }
+        set {
+            operatorTextLabel.font = newValue
+        }
     }
     
     override init(frame: CGRect) {
@@ -64,6 +83,8 @@ class FormulaTextView: UIView {
     }
     
     func commonInit() {
+        operandFont = defaultFont
+        operatorFont = defaultFont
         configureView()
     }
     
@@ -103,12 +124,10 @@ class FormulaTextView: UIView {
     }
     
     private func setStyle(for label: UILabel, textAlignment: NSTextAlignment) {
-        label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         label.textColor = .white
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
-        
         label.textAlignment = textAlignment
     }
     
